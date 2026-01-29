@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ACCEPTE</title>
+
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            width: 220px;
+            height: 90px;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        #non {
+            position: absolute;
+            transition: left 0.12s, top 0.12s;
+        }
+    </style>
+</head>
+
+<body>
+	<h1>Est ce que <strong>Ines Fassy-Elfehri</strong> voudra bien etre ma valentine ?</h1>
+	<img src="ines.jpg" width="30%"/>
+    <button id="oui">Oui</button>
+    <button id="non">Non</button>
+
+    <script>
+        // Bouton OUI → redirection
+        document.getElementById("oui").addEventListener("click", () => {
+            window.location.href = "celebration.html";
+        });
+
+        const btnNon = document.getElementById("non");
+        let tentatives = 0;
+        const maxTentatives = 10;
+        const marge = 15;
+
+        function deplacerBouton() {
+            tentatives++;
+
+            if (tentatives >= maxTentatives) {
+                btnNon.remove();
+                return;
+            }
+
+            const maxX = window.innerWidth - btnNon.offsetWidth - marge;
+            const maxY = window.innerHeight - btnNon.offsetHeight - marge;
+
+            const x = Math.random() * maxX + marge;
+            const y = Math.random() * maxY + marge;
+
+            btnNon.style.left = x + "px";
+            btnNon.style.top = y + "px";
+        }
+
+        // 💻 PC : souris approche
+        btnNon.addEventListener("mouseenter", deplacerBouton);
+
+        // 📱 Mobile : toucher l’écran
+        btnNon.addEventListener("touchstart", (e) => {
+            e.preventDefault(); // empêche le vrai clic
+            deplacerBouton();
+        });
+
+        // Sécurité : si clic réussi quand même
+        btnNon.addEventListener("click", deplacerBouton);
+    </script>
+
+</body>
+</html>
